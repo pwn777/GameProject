@@ -2,6 +2,7 @@
 # Team: Byte Bistro
 # April 4, 2016
 
+#runs the game in a continuous loop.
 def playGame():
   displayHelp()
   currentRoom = getNextRoom("Home")
@@ -34,6 +35,7 @@ def playGame():
     else:
         printNow("Invalid command. Try again.")
 
+#returns an array containing information about current room.
 def getNextRoom(string):
   if string == "Home":
     return ["Home", ["north", "east"], ["Study", "Kitchen"], "Welcome home. You feel safe in this comfortable environment.", [], []]
@@ -52,19 +54,23 @@ def getNextRoom(string):
   elif string == "Deck":
     return ["Deck", ["east"], ["Conservatory"], "Welcome to room 8", [], []]
 
+#executes command and returns a string
 def executeCommand(command, container, object):
   if command == "open":
     return "You have opened the " + container + " and found a(n) " + object
 
+#detirmines if command exist
 def doesCommandExist(room, command):
   return len(room[5])
 
+#returns a room in a legal direction
 def goDirection(cur, dir):
   for i in range(0, len(cur[1])):
     if cur[1][i] == dir:
       return getNextRoom(cur[2][i])
   return cur
 
+#returns a list of all legal directions
 def printPossibleDirections(room):
   output = "Your possible directions are: "
   rooms = ""
@@ -75,6 +81,7 @@ def printPossibleDirections(room):
       rooms = rooms + ", " + room[1][i]
   printNow(output + rooms)
             
+#displays helpful options
 def displayHelp():
   printNow("Available commands:\nhelp - List all possible commands\nexit - Quit the game\n")
 
