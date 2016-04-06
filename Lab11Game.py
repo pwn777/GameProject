@@ -40,26 +40,46 @@ def playGame():
 
 def getNextRoom(string):
   if string == "Den":
-    return ["Den", ["north", "east"], ["Study", "Kitchen"], "Welcome. There is a large oriental rug in the center of the room and a cofee table. There is an unopened letter sitting on the table. You feel safe in this comfortable environment. ", ["letter"], ["\n(picks up letter)\nGreetings, You must escape this house. There is only one way out! HAHAHA!"]]
+    return getDen()
   elif string == "Kitchen":
-    return ["Kitchen", ["north", "west"], ["Lounge", "Den"], "You've entered the kitchen. There is a cabinet and a drawer.", ["cabinet", "drawer"], ["plate", "golden key"]]
+    return getKitchen()
   elif string == "Study":
-    return ["Study", ["south", "east"], ["Den", "Lounge"], "Welcome to room 3", [], []]
+    return getStudy()
   elif string == "Lounge":
-    return ["Lounge", ["north", "south", "west"], ["Library", "Kitchen", "Study"], "Welcome to room 4.", [], []]
+    return getLounge()
   elif string == "Library":
+    return getLibrary();
+  elif string == "Ballroom":
+    return getBallroom()
+  elif string == "Conservatory":
+    return getConservatory()
+  elif string == "Deck":
+    return getDeck()
+    
+def getLounge():
+  return ["Lounge", ["north", "south", "west"], ["Library", "Kitchen", "Study"], "Welcome to room 4.", [], []]
+def getDen():    
+    return ["Den", ["north", "east"], ["Study", "Kitchen"], "Welcome. There is a large oriental rug in the center of the room and a cofee table. There is an unopened letter sitting on the table. You feel safe in this comfortable environment. ", ["letter"], ["\n(picks up letter)\nGreetings, You must escape this house. There is only one way out! HAHAHA!"]]
+def getKitchen():
+    return ["Kitchen", ["north", "west"], ["Lounge", "Den"], "You've entered the kitchen. There is a cabinet and a drawer.", ["cabinet", "drawer"], ["plate", "golden key"]]
+def getStudy():
+    return ["Study", ["south", "east"], ["Den", "Lounge"], "Welcome to room 3", [], []]
+
+def getBallroom():
+    return ["Ballroom", ["west"], ["Library"], "Welcome to room 6", [], []]
+def getConservatory():
+    return ["Conservatory", ["south", "west"], ["Library", "Deck"], "Welcome to room 7", ["chest"], ["rope"]]
+def getDeck():
+    return ["Deck", ["east"], ["Conservatory"], "You stand out on the deck. You would not survive the fall. If only you had some rope.", [], []]
+
+def getLibrary():
     if doorIsOpen == true:
       return ["Library", ["north", "south", "east"], ["Conservatory", "Lounge", "Ballroom"], "You are in the library and you stand before the open gold door", ["door"], ["... wait the door is already open!"]]
     elif hasKey == true:
       return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you. It appears to be solid gold", ["door"], ["You try your golden key on the door and it opens easily. You have opened the golden door!"]]
     else:
       return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you.  It appears to be solid gold", ["door"], ["It wont budge. You need a key to open this door."]]
-  elif string == "Ballroom":
-    return ["Ballroom", ["west"], ["Library"], "Welcome to room 6", [], []]
-  elif string == "Conservatory":
-    return ["Conservatory", ["south", "west"], ["Library", "Deck"], "Welcome to room 7", [], []]
-  elif string == "Deck":
-    return ["Deck", ["east"], ["Conservatory"], "Welcome to room 8", [], []]
+     
 
 def executeCommand(command, container, object):
   if command == "open":
