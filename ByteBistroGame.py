@@ -6,13 +6,13 @@ hasHairPin = false
 hasRope = false
 doorIsOpen = false
 windowIsOpen = false
-
+gameRun = true
 
 def playGame():
   displayHelp()
   currentRoom = getNextRoom("Den")
   prompt(currentRoom)
-  while true:
+  while gameRun:
     input = raw_input(" ")
     if input == "help":
       displayHelp()
@@ -87,7 +87,9 @@ def getConservatory():
 def getDeck():
     if hasRope == true:
       printNow("You use the rope to climb down from the deck.  You reached the ground safely.  You've escaped the mansion.")
-      return false
+      global gameRun
+      gameRun = false   
+      return ["clear!", ["endless"], [""], "You won!", [], []]
     else: 
       return ["Deck", ["east"], ["Conservatory"], "You stand out on the deck. You would not survive the fall. If only you had some rope.", [], []]
 
