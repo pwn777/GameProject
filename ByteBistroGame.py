@@ -13,10 +13,10 @@ def playGame():
   currentRoom = getNextRoom("Den")
   prompt(currentRoom)
   while gameRun:
-    input = raw_input(" ")
+    input = raw_input("What would you like to do? ")
     if input == "help":
       displayHelp()
-      input = raw_input("Press any key to continue")
+      input = raw_input("Press any key to continue. ")
       prompt(currentRoom)
       continue
     elif input == "north" or input == "east" or input == "south" or input == "west":
@@ -28,7 +28,7 @@ def playGame():
       prompt(currentRoom)
     elif input == "open":
       if doesCommandExist(currentRoom, input):
-        object = raw_input("What would you like to open?")
+        object = raw_input("What would you like to open? ")
         string = ""
         for i in range(0, len(currentRoom[4])):
           if currentRoom[4][i] == object:
@@ -36,12 +36,12 @@ def playGame():
         if len(string):
           printNow(string)
         else:
-          printNow("That object does not exist.")
+          printNow("That object does not exist. ")
       else:
-        printNow("There is nothing to open in this room.")
+        printNow("There is nothing to open in this room. ")
       currentRoom = getNextRoom(currentRoom[0])
     else:
-        printNow("I can't do that for you.")
+        printNow("I can't do that for you. ")
 
 def getNextRoom(string):
   if string == "Den":
