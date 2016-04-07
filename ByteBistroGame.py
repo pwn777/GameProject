@@ -71,7 +71,7 @@ def getKitchen():
     return ["Kitchen", ["north", "west"], ["Lounge", "Den"], "You've entered the kitchen. There is a cabinet and a drawer.", ["cabinet", "drawer"], ["plate", "golden key"]]
 
 def getStudy():
-    return ["Study", ["south", "east"], ["Den", "Lounge"], "You've entered the study.  There is a book on the table and a bottled beverage.  You take a seat and rest for a bit.", ["book","beverage"], ["hair pin", "You open the beverage and take a sip.  A sharp pain roars through your chest and you fall to the floor grasping for air.\nYou died.  Better luck next time!"]]
+    return ["Study", ["south", "east"], ["Den", "Lounge"], "You've entered the study.  There is a book on the table and a bottled beverage.  You take a seat and rest for a bit.", ["book","beverage"], ["hair pin", "You open the beverage and take a sip.  You feel refreshed!"]]
 
 def getBallroom():
     return ["Ballroom", ["west"], ["Library"], "Music is playing faintly from a jukebox, but no one is around.  You get an eerie feeling down your spine.  ", [], []]
