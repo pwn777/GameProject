@@ -7,20 +7,21 @@ doorIsOpen = false
 #runs the game in a continuous loop.
 def playGame():
   displayHelp()
-  currentRoom = getNextRoom("Home")
-
+  currentRoom = getNextRoom("Den")
+  prompt(currentRoom)
   while true:
-    printNow("\nYou are currently in the " + currentRoom[0])
-    printNow(currentRoom[3])
-    printPossibleDirections(currentRoom)
-    
-    input = raw_input("What would you like to do (i.e 'north', 'south', 'open', 'help'?   ")
+    input = raw_input(" ")
     if input == "help":
       displayHelp()
+      input = raw_input("Press any key to continue")
+      continue
     elif input == "north" or input == "east" or input == "south" or input == "west":
-      currentRoom = goDirection(currentRoom, input)     
+      currentRoom = goDirection(currentRoom, input)
+      prompt(currentRoom)
     elif input == "exit":
       break;
+    elif input == "look":
+      prompt(currentRoom)
     elif input == "open":
       if doesCommandExist(currentRoom, input):
         object = raw_input("What would you like to open?")
@@ -36,32 +37,51 @@ def playGame():
         printNow("There is nothing to open in this room.")
       currentRoom = getNextRoom(currentRoom[0])
     else:
-        printNow("Invalid command. Try again.")
+        printNow("I can't do that for you.")
 
 #returns an array containing information about current room.
 def getNextRoom(string):
-  if string == "Home":
-    return ["Home", ["north", "east"], ["Study", "Kitchen"], "Welcome home. You feel safe in this comfortable environment.", [], []]
+  if string == "Den":
+    return getDen()
   elif string == "Kitchen":
-    return ["Kitchen", ["north", "west"], ["Lounge", "Home"], "You've entered the kitchen. There is a cabinet and a drawer.", ["cabinet", "drawer"], ["plate", "golden key"]]
+    return getKitchen()
   elif string == "Study":
-    return ["Study", ["south", "east"], ["Home", "Lounge"], "Welcome to room 3", [], []]
+    return getStudy()
   elif string == "Lounge":
-    return ["Lounge", ["north", "south", "west"], ["Library", "Kitchen", "Study"], "Welcome to room 4.", [], []]
+    return getLounge()
   elif string == "Library":
-    printNow(doorIsOpen)
+    return getLibrary();
+  elif string == "Ballroom":
+    return getBallroom()
+  elif string == "Conservatory":
+    return getConservatory()
+  elif string == "Deck":
+    return getDeck()
+    
+def getLounge():
+  return ["Lounge", ["north", "south", "west"], ["Library", "Kitchen", "Study"], "Welcome to room 4.", [], []]
+def getDen():    
+    return ["Den", ["north", "east"], ["Study", "Kitchen"], "Welcome. There is a large oriental rug in the center of the room and a cofee table. There is an unopened letter sitting on the table. You feel safe in this comfortable environment. ", ["letter"], ["\n(picks up letter)\nGreetings, You must escape this house. There is only one way out! HAHAHA!"]]
+def getKitchen():
+    return ["Kitchen", ["north", "west"], ["Lounge", "Den"], "You've entered the kitchen. There is a cabinet and a drawer.", ["cabinet", "drawer"], ["plate", "golden key"]]
+def getStudy():
+    return ["Study", ["south", "east"], ["Den", "Lounge"], "Welcome to room 3", [], []]
+
+def getBallroom():
+    return ["Ballroom", ["west"], ["Library"], "Welcome to room 6", [], []]
+def getConservatory():
+    return ["Conservatory", ["south", "west"], ["Library", "Deck"], "Welcome to room 7", ["chest"], ["rope"]]
+def getDeck():
+    return ["Deck", ["east"], ["Conservatory"], "You stand out on the deck. You would not survive the fall. If only you had some rope.", [], []]
+
+def getLibrary():
     if doorIsOpen == true:
       return ["Library", ["north", "south", "east"], ["Conservatory", "Lounge", "Ballroom"], "You are in the library and you stand before the open gold door", ["door"], ["... wait the door is already open!"]]
     elif hasKey == true:
-      return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large golden door is north of you", ["door"], ["You have opened the door"]]
+      return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you. It appears to be solid gold", ["door"], ["You try your golden key on the door and it opens easily. You have opened the golden door!"]]
     else:
-      return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large golden door is north of you", ["door"], ["clue. You need a key to open this door!"]]
-  elif string == "Ballroom":
-    return ["Ballroom", ["west"], ["Library"], "Welcome to room 6", [], []]
-  elif string == "Conservatory":
-    return ["Conservatory", ["south", "west"], ["Library", "Deck"], "Welcome to room 7", [], []]
-  elif string == "Deck":
-    return ["Deck", ["east"], ["Conservatory"], "Welcome to room 8", [], []]
+      return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you.  It appears to be solid gold", ["door"], ["It wont budge. You need a key to open this door."]]
+     
 
 #executes command and returns a string
 def executeCommand(command, container, object):
@@ -73,12 +93,20 @@ def executeCommand(command, container, object):
       if hasKey == true:
         global doorIsOpen
         doorIsOpen = true
-        return "You have opened the golden door!"
-    return "You have opened the " + container + " and found a(n) " + object
+      return object
+    if container == "letter":
+       return object
+    else:
+      return "You have opened the " + container + " and found a(n) " + object
 
 #detirmines if command exist
 def doesCommandExist(room, command):
   return len(room[5])
+
+def prompt(currentRoom):
+    printNow("\nYou are currently in the " + currentRoom[0])
+    printNow(currentRoom[3])
+    printPossibleDirections(currentRoom)
 
 #returns a room in a legal direction
 def goDirection(cur, dir):
@@ -97,8 +125,9 @@ def printPossibleDirections(room):
     else:
       rooms = rooms + ", " + room[1][i]
   printNow(output + rooms)
+  printNow("Enter 'help' for more options")
             
 #displays helpful options
 def displayHelp():
-  printNow("Available commands:\nhelp - List all possible commands\nexit - Quit the game\n")
+  printNow("\n\nAvailable commands:\n'north', 'south', 'east', west, 'open', 'help' \nexit - Quit the game\n")
 
