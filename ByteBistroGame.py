@@ -17,6 +17,7 @@ def playGame():
     if input == "help":
       displayHelp()
       input = raw_input("Press any key to continue")
+      prompt(currentRoom)
       continue
     elif input == "north" or input == "east" or input == "south" or input == "west":
       currentRoom = goDirection(currentRoom, input)
@@ -97,7 +98,7 @@ def getLibrary():
       return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you. It appears to be solid gold", ["door"], ["You try your golden key on the door and it opens easily. You have opened the golden door!"]]
     else:
       return ["Library", ["south", "east"], ["Lounge", "Ballroom"], "You step into the library. A large door is north of you.  It appears to be solid gold", ["door"], ["It wont budge. You need a key to open this door."]]
-     
+    
 
 def executeCommand(command, container, object):
   if command == "open":
